@@ -31,8 +31,8 @@ public class Person {
 	public String getSurName() {
 		return surName;
 	}
-	
-	public void show() {
+
+	public String toString(){
 		
 		String fullname;
 		fullname = getSurName()+" "+getFirstName();
@@ -40,7 +40,11 @@ public class Person {
 		if (getSecondName() != null) {			
 			fullname += ","+getSecondName();
 		}
-				
-		System.out.println(fullname);			
+		return fullname;
+	}
+	
+	public void show() {
+						
+		System.out.println(toString());			
 	}
 }
