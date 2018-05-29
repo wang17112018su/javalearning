@@ -21,7 +21,7 @@ public class Facility {
 		this(name, null);
 		
 	}
-	public void show() {
+	public String ToString() {
 		String facilityName;
 		facilityName = getName();
 		
@@ -29,8 +29,11 @@ public class Facility {
 			facilityName += "("+getDescription()+")";
 		}
 				
-		System.out.println(facilityName);
+		return facilityName;
 	}
+	public void show () {
+        System.out.println (this);
+    }
 	
 	
 	
