@@ -1,64 +1,94 @@
-package Workshop;
+package workshop;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Booking {
-	
+
 	private Member member;
-	private Facility fac;
-	private LocalDateTime start;
-	private LocalDateTime end;
+	private Facility facility;
+	private LocalDateTime startDate;
+	private LocalDateTime endDate;
+
+	public Booking(Member member, Facility facility, LocalDateTime startDate, LocalDateTime endDate)
+			throws BadBookingException {
+		if (member == null)
+			throw new BadBookingException("Member fill is empty");
+		else if (facility == null)
+			throw new BadBookingException("Facility fill is empty");
+		else if (startDate == null)
+			throw new BadBookingException("Start date is empty");
+		else if (endDate == null)
+			throw new BadBookingException("End date is empty");
+		else if (startDate == endDate)
+			throw new BadBookingException("Both dates are the same");
+		else if (startDate.isAfter(endDate))
+			throw new BadBookingException("End date is before start date");
+
+		this.member = member;
+		this.facility = facility;
+		this.startDate = startDate;
+		this.endDate = endDate;
+
+	}
+
 	public Member getMember() {
 		return member;
 	}
-	public Facility getFac() {
-		return fac;
-	}
-	public LocalDateTime getStart() {
-		return start;
-	}
-	public LocalDateTime getEnd() {
-		return end;
-	}
-	
-	public Booking(Member member, Facility fac, LocalDateTime start, LocalDateTime end)
-	throws MissingFillsException {
-		String error = null;
-		if(member == null)
-			error = "No member specified";
-		else if(fac == null) 
-			error = "No facility specified";
-		else if(start == null||end == null) 
-			error = "Missing dates";
-		else if(start.isAfter(end))
-			error = "Start date can't be before end date";
-		if (error != null)
-			throw new MissingFillsException(error);		
-		this.member = member;
-		this.fac = fac;
-		this.start = start;
-		this.end = end;
-	}
-	
-	//Need the API of localtimedate
-	public boolean overlaps(Booking other) {
-		boolean result = true;
-		if(this.fac!=other.getFac()) {
-			result = false;
-		}else if(this.start.isAfter(other.getEnd())){
-			result = false;
-		}else if(this.end.isBefore(other.getStart())){
-			result = false;
-		}				
-		return result;			
-	}
-	
-	public String ToString() {
-		return getMember().getFirstName()+" "+getFac().getName()+" "+getStart()+" "+getEnd();
-	}
-	
-	public void show() {
-		System.out.println(this.ToString());
+
+	public Facility getFacility() {
+		return facility;
 	}
 
+	public LocalDateTime getStartDate() {
+		return startDate;
+	}
+
+	public LocalDateTime getEndDate() {
+		return endDate;
+	}
+
+	public boolean overlaps(Booking other) {
+		boolean result = false;
+		// check if the facility name is the same
+		if (this.facility.getName() == other.facility.getName()) {
+		
+			// check if start time is between the start and end time of the other booking
+			if (this.getStartDate().isAfter(other.getStartDate())
+					&& (this.getStartDate().isBefore(other.getEndDate()))) {
+				
+				result = true;
+			}
+			// check if end time is between the start and end time of the other booking
+			if (this.getEndDate().isAfter(other.getStartDate()) && (this.getEndDate().isBefore(other.getEndDate()))) {
+				
+				result = true;
+			}
+			// check if start time is start and end time of the other booking
+			if (this.getStartDate().isEqual(other.getStartDate()) || this.getStartDate().isEqual(other.getEndDate())) {
+				
+				result = true;
+			}
+			// check if end time is start and end time of the other booking
+			if (this.getEndDate().isEqual(other.getStartDate()) || this.getEndDate().isEqual(other.getEndDate())) {
+				
+				result = true;
+			}
+		}
+
+		return result;
+
+	}
+
+	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d-MMM-yyyy H:mm");
+
+	public String toString() {
+		return this.getMember().getSurName() + " " + this.getMember().getFirstName() + " has booked "
+				+ this.getFacility().getName() + " from " + this.getStartDate().format(formatter) + " to "
+				+ this.getEndDate().format(formatter);
+	}
+
+	public void show() {
+		System.out.println(toString());
+	}
 }

@@ -1,0 +1,35 @@
+package workshop;
+
+public class ClubApplication {
+
+	public static void main(String[] args) {
+        Club club = new Club ();
+
+        Member member1, member2, member3, member4, member5;
+
+        member1 = club.addMember ("Einstein", "Albert", null);
+        member2 = club.addMember ("Picasso", "Pablo", "Ruiz");
+        member3 = club.addMember ("Webber","Andrew","Lloyd");
+        member4 = club.addMember ("Baggio", "Roberto", null);
+        member5 = club.addMember ("Raffles", "Stamford", null);
+
+        //Member Addition Testing
+        System.out.println ("Current Members:");
+        club.showMember();
+        System.out.println ("Deleting " + member3);
+        int id = member3.getMemberNumber ();
+        club.removeMember (id);
+        System.out.println ("Current members:");
+        club.showMember ();
+
+        //Facility Testing
+        club.addFacility("Lab", "Einstein's Experiment Area");
+        club.addFacility ("Studio", "Picasso's Work Place");
+        club.addFacility ("Room1", "Conference Room on Level 2");
+        club.addFacility ("Room2", "Meeting Room on Level 3");
+        club.show();
+
+
+	}
+
+}

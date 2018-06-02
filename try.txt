@@ -1,0 +1,128 @@
+java - every 6 mths
+based on java 8
+
+Java package = C# references (using)
+
+Java Runtime Environment (JRE) 
+download JDK
+
+Eclispe 
+
+complie and run on different OS
+
+Jar - can zip all file into a jar file 
+java - jar fitnesse - standalone.jar -p 8080
+
+java HelloWorld
+
+1) download Java EE
+
+New java project>>class
+
+Eclispe shortcut key
+help: crtl+<space> -> intellisense
+for help
+syso help
+
+import java.util.Random
+
+public static void main (String ap[])
+{
+System.out.println("AAA");
+Syso + ctrl + <space>
+}
+======================================================
+chapter 1 Classes
+
+this
+pass by reference and value
+overload
+
+Chapter 2
+convert by casting
+convert by widening
+
+new Integer("123")intValue()
+Integer.parseInt
+class [] <= Array of that class
+datatype [] <= Array of that datatype
+
+float f = 2.3333f
+double d = 2.3333
+
+String ss = "a"
+char s = 'a'
+char ss = '\u00A9'
+char sss = '\u00A3'
+
+crtl+/
+
+Chapter 5
+hashcode = value computed from and instance data
+super keyword
+super.*method* call method in super class
+super()*call constructor in super class
+super ()is a implicitly added 
+
+Keywords
+Casting 
+usage 1: 
+Vector class can store object of any type (similar to list in c#)
+page 20
+
+
+we use casting when using vector class
+
+instanceof 
+testing whether the object conform to the give class
+
+final - cannot be modifiable
+final attribute,class, method
+
+abstract 
+abstract class: cannot initalise
+abstract method in abstract class: must have this method in all the subclass
+
+databased connection you dont know what database we are using sql mysql 
+
+interface 
+public interface 
+
+============================
+chapter 8 collection
+.clone
+return a copy 
+
+toArray
+
+all String can use compareTo
+
+isbefore isafter java API
+
+
+Chapter 6
+IOException - input output error
+IndexofBoundException
+throws FileNotFoundException,
+{
+...
+throw new FileNotFoundException(
+...
+} - caller to do try catch
+
+moving within the Array
+front = (front +1)%item.length;
+
+Chapter Java package
+pg 14 - time taken 
+
+EEEEE - friday, tuesday sunday.....
+
+Maven
+plugin - 
+POM - project object model
+POM file copy and paste
+
+Maven Conventions
+Maven .documentation
+

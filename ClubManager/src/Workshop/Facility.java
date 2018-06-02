@@ -1,6 +1,6 @@
-package Workshop;
+package workshop;
 
-public class Facility {
+public class Facility implements Comparable<Facility> {
 	
 	private String name;
 	private String description;
@@ -21,7 +21,8 @@ public class Facility {
 		this(name, null);
 		
 	}
-	public String ToString() {
+	@Override
+	public String toString() {
 		String facilityName;
 		facilityName = getName();
 		
@@ -32,10 +33,13 @@ public class Facility {
 		return facilityName;
 	}
 	public void show () {
-        System.out.println (this);
-    }
-	
-	
-	
+        System.out.println (toString());
 
 }
+
+	@Override
+	public int compareTo(Facility other) {
+		return (getName().compareTo(other.getName()));
+	}
+}
+

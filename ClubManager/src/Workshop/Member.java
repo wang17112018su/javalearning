@@ -1,28 +1,36 @@
-package Workshop;
+package workshop;
 
-public class Member extends Person {
-	
+public class Member extends Person implements Comparable<Member> {
+
 	private int memberNumber;
-	
-	
-	public Member(String surName, String firstName, String secondName, int memberNumber) {
+
+	public Member(String surName, String firstName, String secondName, int memberNum) {
 		super(surName, firstName, secondName);
-		this.memberNumber = memberNumber;
+		this.memberNumber = memberNum;
+		// TODO Auto-generated constructor stub
 	}
-	
-	public Member(String surName, String firstName,int memberNumber) {
-		this(surName, firstName, null, memberNumber);
+
+	public Member(String surName, String firstName, int memberNum) {
+		super(surName, firstName, null);
+		this.memberNumber = memberNum;
+		// TODO Auto-generated constructor stub
 	}
-	
+
 	public int getMemberNumber() {
 		return memberNumber;
 	}
-	
-	public String toString(){
-		
+
+	public String toString() {
+
 		String fullname = super.toString();
 
-		return Integer.toString(getMemberNumber())+" "+fullname;
+		return Integer.toString(getMemberNumber()) + " " + fullname;
+	}
+
+	// Added so that Members can be sorted by membership number
+	@Override
+	public int compareTo(Member other) {
+		return (getMemberNumber() - other.getMemberNumber());
 	}
 
 }

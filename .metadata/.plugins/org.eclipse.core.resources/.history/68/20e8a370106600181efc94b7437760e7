@@ -1,0 +1,64 @@
+package workshop;
+
+import java.time.LocalDateTime;
+import java.time.*;
+import java.time.format.*;
+
+public class Booking {
+
+	private Member member;
+	private Facility facility;
+	private LocalDateTime startDate;
+	private LocalDateTime endDate;
+
+	public Booking(Member member, Facility facility, LocalDateTime startDate, LocalDateTime endDate) {
+		super();
+		this.member = member;
+		this.facility = facility;
+		this.startDate = startDate;
+		this.endDate = endDate;
+	}
+
+	public Member getMember() {
+		return member;
+	}
+
+	public Facility getFacility() {
+		return facility;
+	}
+
+	public LocalDateTime getStartDate() {
+		return startDate;
+	}
+
+	public LocalDateTime getEndDate() {
+		return endDate;
+	}
+
+	public boolean overlaps(Booking other) {
+		boolean result = false;
+		//check if the facility name is the same
+		if (this.facility.getName() == other.facility.getName()) {
+			//check if start time is between the start and end time of the other booking
+			if(this.getStartDate().isAfter(other.getStartDate())&&(this.getStartDate().isBefore(other.getEndDate()))){
+				result = true;
+			}
+			//check if end time is between the start and end time of the other booking
+			if(this.getEndDate().isAfter(other.getStartDate())&&(this.getEndDate().isBefore(other.getEndDate()))){
+				result = true;
+			}
+		}
+		
+		return result;
+		
+	}
+	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d-MMM-yyyy H:mm");
+	
+	public String toString() {
+		return this.getMember().toString() +" has boooked "+ this.getFacility().getName() +" from "+ this.getStartDate().format(formatter) +" to "+this.getEndDate().format(formatter);
+	}
+	
+	public void show() {
+		System.out.println(toString());
+	}
+}

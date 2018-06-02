@@ -1,0 +1,35 @@
+package workshop;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+
+public class BookingRegister {
+
+	private static HashMap<Facility, Booking> allBooking = new HashMap<Facility, Booking>();
+
+	public void addBooking(Member member, Facility facility, LocalDateTime startDate, LocalDateTime endDate) throws BadBookingException {
+		try {
+			Booking b = new Booking(member, facility, startDate, endDate);
+			if (allBooking.containsKey(facility) == false) {
+				allBooking.put(facility, b);
+			} else {
+				ArrayList<Booking> bookinglist = new ArrayList<Booking>(allBooking.values());
+				// loop thru all bookings over the overlaps(Booking)
+				Iterator<Booking> i = bookinglist.iterator();
+				while (i.hasNext()) {
+					if (b.overlaps(i.next())) {
+						throw new BadBookingException("New booking overlaps with existing one");
+					} else {
+						allBooking.put(facility, b);
+					}
+				}
+			}
+		} catch (BadBookingException be) {
+			System.out.println("Bad Booking Exception: " + be.getMessage());
+		}
+
+	}
+
+}

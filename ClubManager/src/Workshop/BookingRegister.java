@@ -1,44 +1,60 @@
-package Workshop;
+package workshop;
 
 import java.time.LocalDateTime;
-import java.util.*;
-
-import club.BadBookingException;
-import club.Booking; 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 
 public class BookingRegister {
-	
-	private Booking booking;
-	private static HashMap<Facility,ArrayList<Booking>>bookinglisting = new HashMap<Facility,ArrayList<Booking>>();;
 
-	public void addBooking(Member member, Facility fac, LocalDateTime start, LocalDateTime end) throws MissingFillsException {
-		
-			booking = new Booking(member, fac, start, end);
-			ArrayList<Booking> bookingList = bookinglisting.get(fac);
-			if(bookingList == null) {
-				bookingList = new ArrayList<Booking>();
-				bookinglisting.put(fac,bookingList);
+	private static HashMap<Facility, ArrayList<Booking>> allBooking = new HashMap<Facility, ArrayList<Booking>>();
+
+	public void addBooking(Member member, Facility facility, LocalDateTime startDate, LocalDateTime endDate)
+			throws BadBookingException {
+		try {
+			Booking b = new Booking(member, facility, startDate, endDate);
+			if (allBooking.containsKey(facility) == false) {
+				ArrayList<Booking> bookings = new ArrayList<Booking>();
+				bookings.add(b);
+				allBooking.put(facility, bookings);
+
 			} else {
-	            Iterator<Booking> i = bookingList.iterator ();
-	            while (i.hasNext ()) {
-	                Booking other = i.next();
-	                if (booking.overlaps(other)) {
-	                    throw new MissingFillsException ("New booking overlaps with existing one");
-	                }
-	            }
-					
+				ArrayList<Booking> bookings = allBooking.get(facility);
+				Iterator<Booking> i = bookings.iterator();
+				while (i.hasNext()) {
+					if (b.overlaps(i.next())) {
+						throw new BadBookingException("New booking overlaps with existing one");
+					}
+				}
+				bookings.add(b);
+				allBooking.put(facility, bookings);
 			}
-			bookingList.add (booking);
+		} catch (BadBookingException be) {
+			System.out.println("Bad Booking Exception: " + be.getMessage());
 		}
-	public ArrayList<Booking> getBookings(Facility Fac, LocalDateTime start, LocalDateTime end){
-		ArrayList<Booking> bookingList = bookinglisting.get(Fac);
-		if (bookingList == null) {
+	}
+
+	public ArrayList<Booking> getBookings(Facility facility, LocalDateTime start, LocalDateTime endDate) {
+
+		ArrayList<Booking> result = new ArrayList<Booking>();
+		ArrayList<Booking> bookings = allBooking.get(facility);
+		Iterator<Booking> i = bookings.iterator();
+		while (i.hasNext()) {
 			
-		}else if(bookingList.)
-		
-		
-		
-		return 
-		
+			Booking b = i.next();
+			if ((start.isBefore(b.getStartDate())) && (endDate.isAfter(b.getEndDate()))) {
+
+				result.add(b);
+
+			}
+		}
+		return result;
+	}
+	
+	public void removeBookings(Booking booking) {
+		//Get the Listbooking based on the facility
+		ArrayList<Booking> result = allBooking.get(booking.getFacility());
+		//Remove the booking from the List booking
+		result.remove(booking);
 	}
 }
