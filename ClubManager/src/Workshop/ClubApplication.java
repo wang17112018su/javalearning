@@ -77,6 +77,8 @@ public class ClubApplication {
         } catch (Exception e) {
         	System.out.println ("Booking class error: " + e.toString());
         }
+        
+        club.sortByMemNumber();
 
 
 	}

@@ -13,7 +13,7 @@ public class Club {
 	private static ArrayList<Member> mList = new ArrayList<Member>();
 	private static HashMap<String, Facility> facList = new HashMap<String, Facility>();
 	BookingRegister br = new BookingRegister();
-	
+
 	public Member addMember(String surName, String firstName, String secondName) {
 		Member a = new Member(surName, firstName, secondName, currentNumber);
 		addToList(a);
@@ -96,28 +96,32 @@ public class Club {
 		System.out.println("Facilities:");
 		showFacilities();
 	}
-	
+
 	public void addBooking(int membershipNum, Facility facility, LocalDateTime startDate, LocalDateTime endDate) {
-		Member m = getMember(membershipNum);	
+		Member m = getMember(membershipNum);
 		try {
 			br.addBooking(m, facility, startDate, endDate);
 		} catch (BadBookingException be) {
-			System.out.println ("Bad Booking Exception: " + be.getMessage());
+			System.out.println("Bad Booking Exception: " + be.getMessage());
 		} catch (Exception e) {
-        	System.out.println ("Booking class error: " + e.toString());
-        }
+			System.out.println("Booking class error: " + e.toString());
+		}
 	}
-	
+
 	public void getBookings(Facility facility, LocalDateTime start, LocalDateTime endDate) {
 		br.getBookings(facility, start, endDate);
 	}
-	
+
 	public void showBookings(Facility facility, LocalDateTime start, LocalDateTime endDate) {
-		Iterator<Booking> i=br.getBookings(facility,start,endDate).iterator();
-    	while (i.hasNext()) {     		
+		Iterator<Booking> i = br.getBookings(facility, start, endDate).iterator();
+		while (i.hasNext()) {
 			i.next().show();
-			}	
+		}
 	}
-	
-	
+
+	public void sortByMemNumber() {
+		Collections.sort(mList);
+		this.showMember();
+	}
+
 }

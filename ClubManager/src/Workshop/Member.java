@@ -30,7 +30,11 @@ public class Member extends Person implements Comparable<Member> {
 	// Added so that Members can be sorted by membership number
 	@Override
 	public int compareTo(Member other) {
-		return (getMemberNumber() - other.getMemberNumber());
+		if (this.getMemberNumber() > other.getMemberNumber())
+			return -1;
+		
+		return 0;
+
 	}
 
 }
