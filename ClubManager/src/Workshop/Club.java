@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+
+import model.Facility;
+import model.Member;
+
 import java.util.Iterator;
 
 public class Club {
@@ -57,6 +61,7 @@ public class Club {
 		if (m != null) {
 			mList.remove(m);
 		}
+		counter -= 1;
 	}
 
 	public Facility getFacility(String name) {

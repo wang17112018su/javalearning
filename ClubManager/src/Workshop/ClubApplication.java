@@ -1,7 +1,13 @@
 package workshop;
 
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Iterator;
+
+import data.MemberDAO;
+import data.MemberDAOImpl;
+import model.Member;
 
 public class ClubApplication {
 
@@ -22,6 +28,7 @@ public class ClubApplication {
 		System.out.println("Deleting " + member3);
 		int id = member3.getMemberNumber();
 		club.removeMember(id);
+		member5 = club.addMember("Raffles2", "Stamford2", null);
 		System.out.println("Current members:");
 		club.showMember();
 
@@ -53,34 +60,71 @@ public class ClubApplication {
 		} catch (Exception e) {
 			System.out.println("Booking class error: " + e.getMessage());
 		}
-		
+
 		// Test BookingRegister
-        try {
-        	BookingRegister register = new BookingRegister();
-        	System.out.println ("Adding bookings for Room1 2-Aug-2007 9:00 to 12:00");
-        	register.addBooking(member1, club.getFacility("Room1"), LocalDateTime.parse("2-Aug-2007 9:00", df), LocalDateTime.parse("2-Aug-2007 12:00", df));
-        	System.out.println ("Adding bookings for Room1 3-Aug-2007 9:00 to 12:00");
-        	register.addBooking(member1, club.getFacility("Room1"), LocalDateTime.parse("3-Aug-2007 9:00", df), LocalDateTime.parse("3-Aug-2007 12:00", df));
-        	System.out.println ("Adding bookings for Room1 2-Aug-2007 9:00 to 12:00");
-        	register.addBooking(member2, club.getFacility("Room1"), LocalDateTime.parse("4-Aug-2007 9:00", df), LocalDateTime.parse("5-Aug-2007 12:00", df));
-        	System.out.println ("Adding bookings for Room1 4-Aug-2007 9:00 to 12:00");
-        	register.addBooking(member2, club.getFacility("Room1"), LocalDateTime.parse("6-Aug-2007 9:00", df), LocalDateTime.parse("6-Aug-2007 12:00", df));
-        	System.out.println ("Adding bookings for Room2 5-Aug-2007 9:00 to 12:00");
-        	register.addBooking(member2, club.getFacility("Room1"), LocalDateTime.parse("7-Aug-2007 9:00", df), LocalDateTime.parse("7-Aug-2007 12:00", df));	
-        	System.out.println("Print out date range 1-Aug-2007 to 4-Aug-2007 for Room1");      	
-        	club.showBookings(club.getFacility("Room1"), LocalDateTime.parse("1-Aug-2007 9:00", df), LocalDateTime.parse("4-Aug-2007 9:00", df));
-  
- 
-        	
-        } catch (BadBookingException be) {
-        	System.out.println ("Bad Booking Exception: " + be.getMessage());
-        } catch (Exception e) {
-        	System.out.println ("Booking class error: " + e.toString());
-        }
-        
-        club.sortByMemNumber();
+		try {
+			BookingRegister register = new BookingRegister();
+			System.out.println("Adding bookings for Room1 2-Aug-2007 9:00 to 12:00");
+			register.addBooking(member1, club.getFacility("Room1"), LocalDateTime.parse("2-Aug-2007 9:00", df),
+					LocalDateTime.parse("2-Aug-2007 12:00", df));
+			System.out.println("Adding bookings for Room1 3-Aug-2007 9:00 to 12:00");
+			register.addBooking(member1, club.getFacility("Room1"), LocalDateTime.parse("3-Aug-2007 9:00", df),
+					LocalDateTime.parse("3-Aug-2007 12:00", df));
+			System.out.println("Adding bookings for Room1 2-Aug-2007 9:00 to 12:00");
+			register.addBooking(member2, club.getFacility("Room1"), LocalDateTime.parse("4-Aug-2007 9:00", df),
+					LocalDateTime.parse("5-Aug-2007 12:00", df));
+			System.out.println("Adding bookings for Room1 4-Aug-2007 9:00 to 12:00");
+			register.addBooking(member2, club.getFacility("Room1"), LocalDateTime.parse("6-Aug-2007 9:00", df),
+					LocalDateTime.parse("6-Aug-2007 12:00", df));
+			System.out.println("Adding bookings for Room2 5-Aug-2007 9:00 to 12:00");
+			register.addBooking(member2, club.getFacility("Room1"), LocalDateTime.parse("7-Aug-2007 9:00", df),
+					LocalDateTime.parse("7-Aug-2007 12:00", df));
+			System.out.println("Print out date range 1-Aug-2007 to 4-Aug-2007 for Room1");
+			club.showBookings(club.getFacility("Room1"), LocalDateTime.parse("1-Aug-2007 9:00", df),
+					LocalDateTime.parse("4-Aug-2007 9:00", df));
 
+		} catch (BadBookingException be) {
+			System.out.println("Bad Booking Exception: " + be.getMessage());
+		} catch (Exception e) {
+			System.out.println("Booking class error: " + e.toString());
+		}
 
+		MemberDAO sdao = new MemberDAOImpl();
+		Member m = new Member("joo", "HUNGRY", 9);
+		Member n = new Member("yoo", "HUNGRY", 9);
+		Member o = new Member("koo", "HUNGRY", 9);
+		System.out.println("Before DAO");
+		try {
+			sdao.createMember(m);
+			sdao.createMember(n);
+			sdao.createMember(o);
+			sdao.createMember(m);
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("Run to queue in biz canteen");
+		
+		try {
+			sdao.listAllMember();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		club.showMember();
+		try {
+			sdao.listMember("raffles").show();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

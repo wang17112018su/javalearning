@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import model.Facility;
+import model.Member;
+
 public class BookingRegister {
 
 	private static HashMap<Facility, ArrayList<Booking>> allBooking = new HashMap<Facility, ArrayList<Booking>>();
